@@ -43,7 +43,7 @@ func ValidateMetricRetantionPeriod(from, to int64) error {
 
 // ValidateGranularity ...
 func ValidateGranularity(s string) error {
-	valid := []string{"1m", "5m", "30m", "4h", "1d", "1w"}
+	valid := []string{"1m", "5m", "10m", "1h", "2h", "4h", "1d"}
 	if !slices.Contains(valid, s) {
 		return fmt.Errorf("unsupported granularity pattern %s has been set", s)
 	}
