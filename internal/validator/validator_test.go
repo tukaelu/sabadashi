@@ -24,3 +24,15 @@ func TestValidateMetricRetantionPeriod(t *testing.T) {
 		"specified for a metric retention period of one day beyond that specified.",
 	)
 }
+
+func TestValidateGranularity(t *testing.T) {
+	expectedErr := fmt.Errorf("unsupported granularity pattern 1w has been set")
+	assert.Equal(t, nil, ValidateGranularity("1m"), "The specified granularity that is supported.")
+	assert.Equal(t, nil, ValidateGranularity("5m"), "The specified granularity that is supported.")
+	assert.Equal(t, nil, ValidateGranularity("10m"), "The specified granularity that is supported.")
+	assert.Equal(t, nil, ValidateGranularity("1h"), "The specified granularity that is supported.")
+	assert.Equal(t, nil, ValidateGranularity("2h"), "The specified granularity that is supported.")
+	assert.Equal(t, nil, ValidateGranularity("4h"), "The specified granularity that is supported.")
+	assert.Equal(t, nil, ValidateGranularity("1d"), "The specified granularity that is supported.")
+	assert.Equal(t, expectedErr, ValidateGranularity("1w"), "Unsupported granularity was specified.")
+}
