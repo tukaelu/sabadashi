@@ -29,25 +29,25 @@ func (c *CsvRecord) ToStringArray(friendly bool) []string {
 			time.Unix(c.Time, 0).Local().String(),
 			c.Name,
 			strconv.FormatInt(c.Time, 10),
-			c.toString(c.Value),
+			toString(c.Value),
 		}
 	} else {
 		return []string{
 			c.Name,
 			strconv.FormatInt(c.Time, 10),
-			c.toString(c.Value),
+			toString(c.Value),
 		}
 	}
 }
 
-func (c *CsvRecord) toString(v any) string {
+func toString(v any) string {
 	switch v := v.(type) {
 	case string:
 		return v
-	case int:
+	case int, int64:
 		return fmt.Sprintf("%d", v)
 	case float64:
-		return fmt.Sprintf("%g", v)
+		return strconv.FormatFloat(v, 'f', -1, 64)
 	case []byte:
 		return *(*string)(unsafe.Pointer(&v))
 	default:
