@@ -14,6 +14,14 @@ Therefore, please refrain from executing them concurrently.
 
 ## Install
 
+### Homebrew tap
+
+```
+brew install tukaelu/tap/sabadashi
+```
+
+### Binary install
+
 Please download the appropriate Zip archive for your environment from the [releases](https://github.com/tukaelu/sabadashi/releases).
 
 ## Usage
