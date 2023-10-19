@@ -1,4 +1,4 @@
-package host
+package subcommand
 
 import (
 	"github.com/mackerelio/mackerel-client-go"
@@ -27,16 +27,18 @@ func NewHostSubcommand() *cli.Command {
 			}
 
 			cmd := &hostCommand{
-				client:      mackerel.NewClient(ctx.String("apikey")),
-				host:        ctx.String("host"),
-				from:        from,
-				to:          to,
-				granularity: ctx.String("granularity"),
-				friendly:    ctx.Bool("with-friendly-date-format"),
-				rawFrom:     ctx.String("from"),
-				rawTo:       ctx.String("to"),
+				baseCommand: baseCommand{
+					client:       mackerel.NewClient(ctx.String("apikey")),
+					from:         from,
+					to:           to,
+					granularity:  ctx.String("granularity"),
+					withFriendly: ctx.Bool("with-friendly-date-format"),
+					rawFrom:      ctx.String("from"),
+					rawTo:        ctx.String("to"),
+				},
+				host: ctx.String("host"),
 			}
-			return run(ctx, cmd)
+			return doHost(ctx, cmd)
 		},
 		Flags: []cli.Flag{
 			&cli.StringFlag{

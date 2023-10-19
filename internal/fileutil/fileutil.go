@@ -1,9 +1,12 @@
 package fileutil
 
 import (
+	"encoding/csv"
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/tukaelu/sabadashi/internal/exporter"
 )
 
 func CreateExportDir(name, from, to string) (string, error) {
@@ -30,7 +33,7 @@ func GetExportFilePath(dir, name, ext string) string {
 	)
 }
 
-func WriteFile(dir, fileName, ext string, fn func(f *os.File) error) error {
+func WriteFile(dir, fileName, ext string, metrics exporter.CsvRecords, withFriendly bool) error {
 	file := GetExportFilePath(dir, fileName, ext)
 	f, err := os.OpenFile(file, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
@@ -38,5 +41,14 @@ func WriteFile(dir, fileName, ext string, fn func(f *os.File) error) error {
 	}
 	defer f.Close()
 
-	return fn(f)
+	// [TODO] The standard Go encoding/csv library may not be able to handle CSV escape, therefore, it may be a good idea to introduce a library for this purpose.
+	cw := csv.NewWriter(f)
+	defer cw.Flush()
+
+	for _, metric := range metrics {
+		if err := cw.Write(metric.ToStringArray(withFriendly)); err != nil {
+			fmt.Printf("write csv file failed (reason: %s)", err)
+		}
+	}
+	return nil
 }
