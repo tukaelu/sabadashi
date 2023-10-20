@@ -7,7 +7,6 @@ import (
 
 type baseCommand struct {
 	client       *mackerel.Client
-	name         string
 	from         int64
 	to           int64
 	granularity  string
