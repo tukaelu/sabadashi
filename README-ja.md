@@ -5,7 +5,7 @@
 ## 概要
 
 Mackerelの任意のホストの指定した期間に投稿されたメトリックをCSVファイルに出力する非公式なコマンドラインツールです。  
-初版ではホストメトリックの取得にのみ対応しています。
+ホストメトリックとサービスメトリックの取得に対応しています。
 
 なお、このツールは大量のAPIリクエストを行うことがあります。多重実行はサービスに負荷をかける事も考えられるのでお控えください。
 
@@ -23,6 +23,7 @@ brew install tukaelu/tap/sabadashi
 
 ## 使用方法
 
+### ホストメトリック
 ```
 NAME:
    sabadashi host - Retrieves host metrics
@@ -36,6 +37,24 @@ OPTIONS:
    --to value                       YYYYMMDD形式でメトリック取得を終了する日付を指定 （例: 20231231）
    --granularity value, -g value    取得するメトリックの粒度を 1m, 5m, 10m, 1h, 2h, 4h, 1d から指定 （デフォルト: 1m）
    --with-friendly-date-format, -f  フラグを有効にするとCSVの行頭に読みやすい日付のカラムを追加 （デフォルト: 追加しない）
+   --help, -h                       ヘルプを表示する
+```
+
+### サービスメトリック
+```
+NAME:
+   sabadashi service - Retrieves service metrics
+
+USAGE:
+   sabadashi service [command options] [arguments...]
+
+OPTIONS:
+   --name value, -n value           メトリックを取得するサービス名を指定
+   --from value                     YYYYMMDD形式でメトリック取得を開始する日付を指定 （例: 20230101）
+   --to value                       YYYYMMDD形式でメトリック取得を終了する日付を指定 （例: 20231231）
+   --granularity value, -g value    取得するメトリックの粒度を 1m, 5m, 10m, 1h, 2h, 4h, 1d から指定 （デフォルト: 1m）
+   --with-friendly-date-format, -f  フラグを有効にするとCSVの行頭に読みやすい日付のカラムを追加 （デフォルト: 追加しない）
+   --with-external-monitors, -e     フラグを有効にすると外形監視で計測したメトリックも含める （デフォルト: 追加しない）
    --help, -h                       ヘルプを表示する
 ```
 
@@ -59,7 +78,8 @@ sabadashi host -apikey <your api key> -host <your host id> -from <YYYYMMDD> -to 
 
 - 非公式なプラグインのため、ご質問はIssueやSNSなどでお願いします。
 - 前述の通り、複数のホストのメトリクスを同時に取得する行為はサービスに負荷をかけることがあるためお控えください。
-- ホストメトリックは[メトリック名の一覧API](https://mackerel.io/ja/api-docs/entry/hosts#metric-names)を元にメトリックを取得しています。
+- ホストメトリックは[ホストのメトリック名の一覧API](https://mackerel.io/ja/api-docs/entry/hosts#metric-names)を元にメトリックを取得しています。
+- サービスメトリックは[サービスのメトリック名の一覧API](https://mackerel.io/ja/api-docs/entry/services#metric-names)を元にして、外形監視を対象にするオプションが有効な場合に限り、[監視ルールの一覧](https://mackerel.io/ja/api-docs/entry/monitors#list)から外形監視で計測されたメトリックを追加してメトリックを取得しています。
 - 指定した期間中にメトリックが投稿されていない場合、その時間帯のデータはCSVには出力されず、空のファイルだけが作成されることもあります。
 
 ## ライセンス
