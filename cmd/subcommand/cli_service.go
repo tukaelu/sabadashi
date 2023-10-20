@@ -67,6 +67,7 @@ func NewServiceSubCommand() *cli.Command {
 				Name:        "granularity",
 				Aliases:     []string{"g"},
 				Usage:       "Specify the granularity of metric data. Choose from 1m, 5m, 10m, 1h, 2h, 4h or 1d.",
+				Value:       "1m",
 				DefaultText: "1m",
 				Action: func(ctx *cli.Context, s string) error {
 					return validator.ValidateGranularity(s)

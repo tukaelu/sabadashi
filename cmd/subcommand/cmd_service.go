@@ -86,7 +86,7 @@ func doService(ctx *cli.Context, s *serviceCommand) error {
 				defer wg.Done()
 
 				metrics, err := retriever.Retrieve(ctx, metricName, func() ([]mackerel.MetricValue, error) {
-					metricValues, err := s.client.FetchServiceMetricValues(s.name, metricName, s.from, s.to)
+					metricValues, err := s.client.FetchServiceMetricValues(s.name, metricName, from, to)
 					if err != nil {
 						return nil, fmt.Errorf("[ERROR] failed to retrieve metrics (metric: %s, from: %d, to: %d) (reason: %s)", metricName, from, to, err)
 					}

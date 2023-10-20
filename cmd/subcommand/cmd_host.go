@@ -73,7 +73,7 @@ func doHost(ctx *cli.Context, h *hostCommand) error {
 				defer wg.Done()
 
 				metrics, err := retriever.Retrieve(ctx, metricName, func() ([]mackerel.MetricValue, error) {
-					metricValues, err := h.client.FetchHostMetricValues(h.host, metricName, h.from, h.to)
+					metricValues, err := h.client.FetchHostMetricValues(h.host, metricName, from, to)
 					if err != nil {
 						return nil, fmt.Errorf("[ERROR] failed to retrieve metrics (metric: %s, from: %d, to: %d) (reason: %s)", metricName, from, to, err)
 					}
