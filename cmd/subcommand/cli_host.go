@@ -36,14 +36,13 @@ func NewHostSubcommand() *cli.Command {
 					rawFrom:      ctx.String("from"),
 					rawTo:        ctx.String("to"),
 				},
-				host: ctx.String("host"),
+				host: ctx.String("id"),
 			}
 			return doHost(ctx, cmd)
 		},
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     "host",
-				Aliases:  []string{"H"},
+				Name:     "id",
 				Usage:    "ID of the host from which to retrieve metric",
 				Required: true,
 			},

@@ -35,7 +35,7 @@ USAGE:
    sabadashi host [command options] [arguments...]
 
 OPTIONS:
-   --host value, -H value           メトリックを取得するホストIDを指定
+   --id value                       メトリックを取得するホストIDを指定
    --from value                     YYYYMMDD形式でメトリック取得を開始する日付を指定 （例: 20230101）
    --to value                       YYYYMMDD形式でメトリック取得を終了する日付を指定 （例: 20231231）
    --granularity value, -g value    取得するメトリックの粒度を 1m, 5m, 10m, 1h, 2h, 4h, 1d から指定 （デフォルト: 1m）
@@ -67,10 +67,10 @@ OPTIONS:
 
 ```
 # APIキーが環境変数 MACKEREL_APIKEY に設定されている場合
-sabadashi host -host <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
+sabadashi host -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
 
 # APIキーをオプションで指定する場合
-sabadashi host -apikey <your api key> -host <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
+sabadashi host -apikey <your api key> -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
 ```
 
 環境変数の`MACKEREL_APIKEY`もしくは`-apikey`オプションに指定するAPIキーには参照権限が必要となります。
