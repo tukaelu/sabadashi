@@ -39,7 +39,7 @@ USAGE:
    sabadashi host [command options] [arguments...]
 
 OPTIONS:
-   --host value, -H value           ID of the host from which to retrieve metric
+   --id value                       ID of the host from which to retrieve metric
    --from value                     Specify the date to start retrieving metrics in YYYYMMDD format. (e.g. 20230101)
    --to value                       Specify the date to end retrieving metrics in YYYYMMDD format. (e.g. 20231231)
    --granularity value, -g value    Specify the granularity of metric data. Choose from 1m, 5m, 10m, 1h, 2h, 4h or 1d. (default: 1m)
@@ -70,10 +70,10 @@ The tool will retrieve metrics posted from `YYYYY/MM/DD 00:00:00` specified in `
 
 ```
 # If the MACKEREL_APIKEY is set in an environment variable
-sabadashi host -host <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
+sabadashi host -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
 
 # If not, and you explicitly specify
-sabadashi host -apkey <your api key> -host <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
+sabadashi host -apkey <your api key> -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
 ```
 
 The API key specified in the environment variable `MACKEREL_APIKEY` or the `-apikey` option must have read permission.
