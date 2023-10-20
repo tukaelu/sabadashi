@@ -1,4 +1,4 @@
-package host
+package subcommand
 
 import (
 	"github.com/mackerelio/mackerel-client-go"
@@ -8,13 +8,11 @@ import (
 	"github.com/tukaelu/sabadashi/internal/validator"
 )
 
-func NewHostSubcommand() *cli.Command {
+func NewServiceSubCommand() *cli.Command {
 	return &cli.Command{
-		Name:  "host",
-		Usage: "Retrieves host metrics",
+		Name:  "service",
+		Usage: "Retrieves service metrics",
 		Action: func(ctx *cli.Context) error {
-
-			// [TODO] Check duplicate processes on the same host
 
 			from := converter.ToStartDayOfUnixtime(ctx.String("from"))
 			to := converter.ToEndDayOfUnixtime(ctx.String("to"))
@@ -26,23 +24,27 @@ func NewHostSubcommand() *cli.Command {
 				return err
 			}
 
-			cmd := &hostCommand{
-				client:      mackerel.NewClient(ctx.String("apikey")),
-				host:        ctx.String("host"),
-				from:        from,
-				to:          to,
-				granularity: ctx.String("granularity"),
-				friendly:    ctx.Bool("with-friendly-date-format"),
-				rawFrom:     ctx.String("from"),
-				rawTo:       ctx.String("to"),
+			cmd := &serviceCommand{
+				baseCommand: baseCommand{
+					client:       mackerel.NewClient(ctx.String("apikey")),
+					from:         from,
+					to:           to,
+					granularity:  ctx.String("granularity"),
+					withFriendly: ctx.Bool("with-friendly-date-format"),
+					rawFrom:      ctx.String("from"),
+					rawTo:        ctx.String("to"),
+				},
+				name:         ctx.String("name"),
+				withExternal: ctx.Bool("with-external-monitors"),
 			}
-			return run(ctx, cmd)
+
+			return doService(ctx, cmd)
 		},
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     "host",
-				Aliases:  []string{"H"},
-				Usage:    "ID of the host from which to retrieve metric",
+				Name:     "name",
+				Aliases:  []string{"n"},
+				Usage:    "Name of the service from which to retrieve metric",
 				Required: true,
 			},
 			&cli.StringFlag{
@@ -65,6 +67,7 @@ func NewHostSubcommand() *cli.Command {
 				Name:        "granularity",
 				Aliases:     []string{"g"},
 				Usage:       "Specify the granularity of metric data. Choose from 1m, 5m, 10m, 1h, 2h, 4h or 1d.",
+				Value:       "1m",
 				DefaultText: "1m",
 				Action: func(ctx *cli.Context, s string) error {
 					return validator.ValidateGranularity(s)
@@ -74,6 +77,11 @@ func NewHostSubcommand() *cli.Command {
 				Name:    "with-friendly-date-format",
 				Aliases: []string{"f"},
 				Usage:   "If this flag is enabled, an additional column with a friendly date format is output at the beginning of the CSV line.",
+			},
+			&cli.BoolFlag{
+				Name:    "with-external-monitors",
+				Aliases: []string{"e"},
+				Usage:   "If this flag is enabled, it also includes the metric measured in the external monitoring.",
 			},
 		},
 	}

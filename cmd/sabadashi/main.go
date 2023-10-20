@@ -9,7 +9,7 @@ import (
 
 	"github.com/urfave/cli/v2"
 
-	"github.com/tukaelu/sabadashi/internal/subcommand"
+	"github.com/tukaelu/sabadashi/cmd/subcommand"
 )
 
 var version string
