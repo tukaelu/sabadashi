@@ -48,6 +48,7 @@ func (c *serviceCommand) run(ctx *cli.Context) error {
 	}
 
 	if len(metricNames) == 0 {
+		fileutil.RemoveDir(exportDir)
 		return fmt.Errorf("There was no service metric available for export.")
 	}
 
