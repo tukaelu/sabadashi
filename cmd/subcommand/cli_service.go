@@ -38,7 +38,7 @@ func NewServiceSubCommand() *cli.Command {
 				withExternal: ctx.Bool("with-external-monitors"),
 			}
 
-			return doService(ctx, cmd)
+			return cmd.run(ctx)
 		},
 		Flags: []cli.Flag{
 			&cli.StringFlag{
