@@ -23,17 +23,17 @@ type hostCommand struct {
 	host string
 }
 
-func doHost(ctx *cli.Context, h *hostCommand) error {
+func (c *hostCommand) run(ctx *cli.Context) error {
 
-	exportDir, err := fileutil.CreateExportDir(h.host, h.rawFrom, h.rawTo)
+	exportDir, err := fileutil.CreateExportDir(c.host, c.rawFrom, c.rawTo)
 	if err != nil {
 		return err
 	}
 
-	interval := converter.GranularityToInterval(h.granularity)
-	attempts := (h.to-h.from)/interval + 1
+	interval := converter.GranularityToInterval(c.granularity)
+	attempts := (c.to-c.from)/interval + 1
 
-	metricNames, err := h.client.ListHostMetricNames(h.host)
+	metricNames, err := c.client.ListHostMetricNames(c.host)
 	if err != nil {
 		return err
 	}
@@ -47,7 +47,7 @@ func doHost(ctx *cli.Context, h *hostCommand) error {
 		for {
 			select {
 			case res := <-ch:
-				if err := fileutil.WriteFile(exportDir, res.MetricName, "csv", res.Records, h.withFriendly); err != nil {
+				if err := fileutil.WriteFile(exportDir, res.MetricName, "csv", res.Records, c.withFriendly); err != nil {
 					fmt.Printf("Failed to write CSV file. (reason: %s)\n", err)
 					return
 				}
@@ -58,13 +58,13 @@ func doHost(ctx *cli.Context, h *hostCommand) error {
 		}
 	}(ch)
 
-	from := h.from
+	from := c.from
 	to := int64(0)
 	wg := &sync.WaitGroup{}
 	for i := int64(0); i < attempts; i++ {
 		to = from + interval
-		if to > h.to {
-			to = h.to
+		if to > c.to {
+			to = c.to
 		}
 
 		for _, metricName := range metricNames {
@@ -73,7 +73,7 @@ func doHost(ctx *cli.Context, h *hostCommand) error {
 				defer wg.Done()
 
 				metrics, err := retriever.Retrieve(ctx, metricName, func() ([]mackerel.MetricValue, error) {
-					metricValues, err := h.client.FetchHostMetricValues(h.host, metricName, from, to)
+					metricValues, err := c.client.FetchHostMetricValues(c.host, metricName, from, to)
 					if err != nil {
 						return nil, fmt.Errorf("[ERROR] failed to retrieve metrics (metric: %s, from: %d, to: %d) (reason: %s)", metricName, from, to, err)
 					}

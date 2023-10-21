@@ -38,7 +38,7 @@ func NewHostSubcommand() *cli.Command {
 				},
 				host: ctx.String("id"),
 			}
-			return doHost(ctx, cmd)
+			return cmd.run(ctx)
 		},
 		Flags: []cli.Flag{
 			&cli.StringFlag{
