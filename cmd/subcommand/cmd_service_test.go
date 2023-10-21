@@ -33,7 +33,7 @@ func TestListExternalMonitorMetricNames(t *testing.T) {
 			]
 		}
 		`
-		w.Write([]byte(resJson))
+		_, _ = w.Write([]byte(resJson))
 	}))
 	defer sv.Close()
 
