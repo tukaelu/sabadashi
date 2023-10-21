@@ -35,6 +35,7 @@ func (c *hostCommand) run(ctx *cli.Context) error {
 
 	metricNames, err := c.client.ListHostMetricNames(c.host)
 	if err != nil {
+		fileutil.RemoveDir(exportDir)
 		return err
 	}
 

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/tukaelu/sabadashi/internal/exporter"
 )
@@ -21,9 +22,28 @@ func CreateExportDir(name, from, to string) (string, error) {
 			return "", err
 		}
 	} else {
-		return "", fmt.Errorf("Directory '%s' is already exists. Please try again after making a backup", dirPath)
+		now := time.Now().Format("20060102T150405")
+		renameTo := filepath.Join(
+			cwd,
+			name,
+			fmt.Sprintf("%s_%s_%s", from, to, now),
+		)
+		if err := os.Rename(dirPath, renameTo); err != nil {
+			return "", fmt.Errorf("Failed to rename an already existing directory. ('%s' to '%s')", dirPath, renameTo)
+		}
+		fmt.Printf("Renamed an already existing directory to '%s'.\n", renameTo)
+
+		if err := os.MkdirAll(dirPath, 0755); err != nil {
+			return "", err
+		}
 	}
 	return dirPath, nil
+}
+
+func RemoveDir(exportDir string) {
+	if err := os.Remove(exportDir); err != nil {
+		fmt.Printf("Failed to delete directory. (path: %s)", exportDir)
+	}
 }
 
 func GetExportFilePath(dir, name, ext string) string {
