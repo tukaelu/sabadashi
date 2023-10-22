@@ -8,13 +8,13 @@ import (
 	"time"
 
 	"github.com/mackerelio/mackerel-client-go"
-	"github.com/schollz/progressbar/v3"
 	"github.com/urfave/cli/v2"
 
 	"github.com/tukaelu/sabadashi/internal/converter"
 	"github.com/tukaelu/sabadashi/internal/definition"
 	"github.com/tukaelu/sabadashi/internal/exporter"
 	"github.com/tukaelu/sabadashi/internal/fileutil"
+	"github.com/tukaelu/sabadashi/internal/progress"
 	"github.com/tukaelu/sabadashi/internal/retriever"
 )
 
@@ -52,7 +52,10 @@ func (c *serviceCommand) run(ctx *cli.Context) error {
 		return fmt.Errorf("There was no service metric available for export.")
 	}
 
-	progress := progressbar.Default(attempts * int64(len(metricNames)))
+	bar := progress.NewProgress(
+		attempts*int64(len(metricNames)),
+		fmt.Sprintf("Download service metrics (create %d file(s))", len(metricNames)),
+	)
 
 	ch := make(chan exporter.Result, definition.CONCURRENT_FILE_OPERATION)
 	defer close(ch)
@@ -107,12 +110,12 @@ func (c *serviceCommand) run(ctx *cli.Context) error {
 
 			time.Sleep(350 * time.Millisecond)
 
-			_ = progress.Add(1)
+			bar.Increment()
 		}
 		wg.Wait()
 
 		from += interval
-		_ = progress.Add(1)
+		bar.Increment()
 	}
 
 	return nil
