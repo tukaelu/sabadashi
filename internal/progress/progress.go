@@ -15,12 +15,12 @@ type Progress struct {
 
 func NewProgress(max int64, desc string) *Progress {
 	width, _, err := term.GetSize(int(os.Stdout.Fd()))
-	if err != nil {
-		// If the terminal size cannot be taken, it shall be roughly 35.
-		width = 35
+	if err != nil || width < 100 {
+		// If the size of the terminal cannot be obtained or is smaller than 100, set the width roughly to 10.
+		width = 10
 	} else {
 		// adjust the width roughly...
-		width = width / 3
+		width = width / 4
 	}
 
 	return &Progress{
