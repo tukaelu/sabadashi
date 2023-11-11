@@ -1,7 +1,7 @@
 # sabadashi
 ![Latest GitHub Release](https://img.shields.io/github/release/tukaelu/sabadashi.svg)
 [![Go Report Card](https://goreportcard.com/badge/tukaelu/sabadashi)](https://goreportcard.com/report/tukaelu/sabadashi)
-![Github Actions Test](https://github.com/tukaelu/sabadashi/workflows/test/badge.svg?branch=main)
+![Github Actions Test](https://github.com/tukaelu/sabadashi/actions/workflows/ci.yaml/badge.svg?branch=main)
 
 ![](./images/sabadashi-logo.png)
 
