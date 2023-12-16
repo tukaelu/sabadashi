@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/k0kubun/go-ansi v0.0.0-20180517002512-3bf9e2903213
-	github.com/mackerelio/mackerel-client-go v0.27.0
+	github.com/mackerelio/mackerel-client-go v0.28.0
 	github.com/schollz/progressbar/v3 v3.14.1
 	github.com/stretchr/testify v1.8.4
 	github.com/urfave/cli/v2 v2.26.0
