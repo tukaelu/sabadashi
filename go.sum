@@ -7,8 +7,8 @@ github.com/k0kubun/go-ansi v0.0.0-20180517002512-3bf9e2903213 h1:qGQQKEcAR99REcM
 github.com/k0kubun/go-ansi v0.0.0-20180517002512-3bf9e2903213/go.mod h1:vNUNkEQ1e29fT/6vq2aBdFsgNPmy8qMdSay1npru+Sw=
 github.com/kylelemons/godebug v1.1.0 h1:RPNrshWIDI6G2gRW9EHilWtl7Z6Sb1BR0xunSBf0SNc=
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
-github.com/mackerelio/mackerel-client-go v0.31.0 h1:oUBwuJzZkvhSFf7C7zpOBej8jM0kITUz7eVMAINIfO4=
-github.com/mackerelio/mackerel-client-go v0.31.0/go.mod h1:b4qVMQi+w4rxtKQIFycLWXNBtIi9d0r571RzYmg/aXo=
+github.com/mackerelio/mackerel-client-go v0.34.0 h1:p7m2ceyqn3iihIb08URCb/pO5gs30IWCJKStQAI5ARc=
+github.com/mackerelio/mackerel-client-go v0.34.0/go.mod h1:YEWy40Ybr+Z75TvQw0t9/KYO0ZfPW2GrbCJhRp0UHpY=
 github.com/mattn/go-isatty v0.0.20 h1:xfD0iDuEKnDkl03q4limB+vH+GxLEtL/jb4xVJSWWEY=
 github.com/mattn/go-isatty v0.0.20/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D7dTCTo3Y=
 github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db h1:62I3jR2EmQ4l5rM/4FEfDWcRD+abF5XlKShorW5LRoQ=
