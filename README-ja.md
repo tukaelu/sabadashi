@@ -70,7 +70,7 @@ OPTIONS:
 sabadashi host -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
 
 # APIキーをオプションで指定する場合
-sabadashi host -apikey <your api key> -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
+sabadashi -apikey <your api key> host -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
 ```
 
 環境変数の`MACKEREL_APIKEY`もしくは`-apikey`オプションに指定するAPIキーには参照権限が必要となります。

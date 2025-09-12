@@ -73,7 +73,7 @@ The tool will retrieve metrics posted from `YYYYY/MM/DD 00:00:00` specified in `
 sabadashi host -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
 
 # If not, and you explicitly specify
-sabadashi host -apkey <your api key> -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
+sabadashi -apikey <your api key> host -id <your host id> -from <YYYYMMDD> -to <YYYYMMDD>
 ```
 
 The API key specified in the environment variable `MACKEREL_APIKEY` or the `-apikey` option must have read permission.
